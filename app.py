@@ -5,14 +5,14 @@ import torch
 # Load the model and tokenizer
 @st.cache_resource
 def load_model():
-    model_name = "google/gemma-2b"  # Using Gemma 2B as MedGemma is not publicly available
+    model_name = "microsoft/DialoGPT-medium"  # Using a public conversational model as demo
     tokenizer = AutoTokenizer.from_pretrained(model_name)
-    model = AutoModelForCausalLM.from_pretrained(model_name, torch_dtype=torch.float16)
+    model = AutoModelForCausalLM.from_pretrained(model_name)
     return tokenizer, model
 
 tokenizer, model = load_model()
 
-st.title("Healthcare Assistant (Using Gemma Model)")
+st.title("Healthcare Assistant Demo (Using DialoGPT)")
 
 st.write("Ask a medical question:")
 
