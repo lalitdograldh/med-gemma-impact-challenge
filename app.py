@@ -24,7 +24,7 @@ if st.button("Ask"):
         input_text = f"Question: {user_input}\nAnswer:"
         inputs = tokenizer(input_text, return_tensors="pt", padding=True)
         with torch.no_grad():
-            outputs = model.generate(**inputs, max_length=100, num_return_sequences=1, do_sample=True, top_p=0.9, temperature=0.7, eos_token_id=tokenizer.eos_token_id, pad_token_id=tokenizer.eos_token_id)
+            outputs = model.generate(**inputs, max_length=2000, num_return_sequences=1, do_sample=True, top_p=0.9, temperature=0.7, eos_token_id=tokenizer.eos_token_id, pad_token_id=tokenizer.eos_token_id)
         response = tokenizer.decode(outputs[0], skip_special_tokens=True)
         # Extract answer part
         if "Answer:" in response:
