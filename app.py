@@ -5,14 +5,14 @@ import torch
 # Load the model and tokenizer
 @st.cache_resource
 def load_model():
-    model_name = "google/med-gemma-7b"  # Assuming this is the model name
+    model_name = "google/gemma-2b"  # Using Gemma 2B as MedGemma is not publicly available
     tokenizer = AutoTokenizer.from_pretrained(model_name)
-    model = AutoModelForCausalLM.from_pretrained(model_name, torch_dtype=torch.float16, device_map="auto")
+    model = AutoModelForCausalLM.from_pretrained(model_name, torch_dtype=torch.float16)
     return tokenizer, model
 
 tokenizer, model = load_model()
 
-st.title("MedGemma Healthcare Assistant")
+st.title("Healthcare Assistant (Using Gemma Model)")
 
 st.write("Ask a medical question:")
 
