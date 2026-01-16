@@ -5,14 +5,14 @@ import torch
 # Load the model and tokenizer
 @st.cache_resource
 def load_model():
-    model_name = "microsoft/DialoGPT-medium"  # Using a public conversational model as demo
+    model_name = "microsoft/DialoGPT-small"  # Smaller public model for demo
     tokenizer = AutoTokenizer.from_pretrained(model_name)
     model = AutoModelForCausalLM.from_pretrained(model_name)
     return tokenizer, model
 
 tokenizer, model = load_model()
 
-st.title("Healthcare Assistant Demo (Using DialoGPT)")
+st.title("Healthcare Assistant Demo (Using DialoGPT-Small)")
 
 st.write("Ask a medical question:")
 
