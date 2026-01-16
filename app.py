@@ -5,14 +5,14 @@ import torch
 # Load the model and tokenizer
 @st.cache_resource
 def load_model():
-    model_name = "microsoft/DialoGPT-small"  # Smaller public model for demo
+    model_name = "microsoft/BioGPT"  # Biomedical model for better medical responses
     tokenizer = AutoTokenizer.from_pretrained(model_name)
     model = AutoModelForCausalLM.from_pretrained(model_name)
     return tokenizer, model
 
 tokenizer, model = load_model()
 
-st.title("Healthcare Assistant Demo (Using DialoGPT-Small)")
+st.title("Healthcare Assistant Demo (Using BioGPT)")
 
 st.write("Ask a medical question:")
 
@@ -20,10 +20,14 @@ user_input = st.text_input("Question:")
 
 if st.button("Ask"):
     if user_input:
-        inputs = tokenizer(user_input, return_tensors="pt").to(model.device)
+        input_text = f"Question: {user_input}\nAnswer:"
+        inputs = tokenizer(input_text, return_tensors="pt")
         with torch.no_grad():
-            outputs = model.generate(**inputs, max_length=200)
+            outputs = model.generate(**inputs, max_length=200, num_return_sequences=1, do_sample=True, top_p=0.9)
         response = tokenizer.decode(outputs[0], skip_special_tokens=True)
+        # Extract answer part
+        if "Answer:" in response:
+            response = response.split("Answer:")[1].strip()
         st.write("Response:", response)
     else:
         st.write("Please enter a question.")
